@@ -1,5 +1,5 @@
-title: "title"
-author: "Blog Author"
+title: "April Sagan"
+author: "April Sagan"
 description: "Made with <b style=\"color: #f45;\">&lt;3</b> by <b><a href=\"https://github.com/niklasbuschmann\">@niklasbuschmann</a></b>"
 permalink: /:title/
 lang: "en"
@@ -23,11 +23,11 @@ minimal: true               # use simpler style
 
 navigation:
   - {file: "index.html", icon: home}
-  - {file: "README.md", icon: address-card}
+  - {file: "blog.html", icon: address-card}
 
 external:                    # see http://fontawesome.com/icons
 #  - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
-  - {title: Github, icon: github, url: "https://github.com/niklasbuschmann/contrast"}
+  - {title: Github, icon: github, url: "https://github.com/april1729"}
 #  - {title: Subscribe, icon: rss, url: "/feed.xml"}
 
 comments:
