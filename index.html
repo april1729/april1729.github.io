@@ -3,8 +3,40 @@ layout: default
 title: "Home"
 ---
 
+<h1> About Me</h1>
+<p>
+Hello! I am a fourth year Ph.D. candidate in the mathematical sciences department at RPI writing a dissertation on the use of nonconvex regularizers for low rank models with applications in power systems, machine learning, and computer vision.
+
+I also write blog posts about how machine learning practitioners can use techniques that are of interest in the mathematical optimization research community. From talking to people who use machine learning in industry, I’ve found that there’s a gap between what gets used in industry and what gets studied in academia, and I hope to help bring the two closer together.
+</p>
+<h1>
+Research Interests
+</h1>
+<p>
+In general, I study nonconvex optimization techniques for machine learning. My work recently has been on Matrix Completion and Robust PCA, with applications in data analysis for power systems. 
+
+Previously, I have done research on nonconvex optimization techniques in Bioinformatics, which is something I hope to do more of in the future
+</p>
+<h>
+Education
+</h>
+<p>
+Ph.D. in Mathematics, Rensselaer Polytechnic Institute, Expected graduation May 2021
+M.S. in Applied Mathematics, Rensselaer Polytechnic Institute, 2019
+B.S. in Applied Mathematics with a Minor in Physics, Rochester Institute of Technology, 2016
+</p>
+<h>
+Publications
+</h>
+<p>
+Sagan, A., Liu, Y., Bernstein, A. (2019) Decentralized Low-Rank State Estimation for Power Distribution Systems. arXiv preprint arXiv:1910.0483
+Liu, Y., Sagan, A., Bernstein, A., Yang, R., Zhou, X., & Zhang, Y. (2019). Matrix Completion Using Alternating Minimization for Distribution System State Estimation. arXiv preprint arXiv:1909.12459
+De Los Santos, Hannah & J Collins, Emily & Mann, Catherine & W Sagan, April & Jankowski, Meaghan & Bennett, Kristin & Hurley, Jennifer. (2019). ECHO: an Application for Detection and Analysis of Oscillators Identifies Metabolic Regulation on Genome-Wide Circadian Output. Bioinformatics (Oxford, England). 10.1093/bioinformatics/btz617. 
+</p>
+
+
 {% if site.show_excerpts %}
   {% include home.html %}
 {% else %}
-  {% include archive.html title="Posts" %}
+  {% include archive.html title="Blog Posts" %}
 {% endif %}
