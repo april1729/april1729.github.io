@@ -17,7 +17,7 @@ show_title: true            # always keep the site title visible
 # Styling
 
 dark_header: false           # always keep the header dark
-minimal: true               # use simpler style
+minimal: false               # use simpler style
 
 # Menu
 
@@ -36,3 +36,5 @@ comments:
 
 plugins:
  - jekyll-feed
+
+mathjax: true
