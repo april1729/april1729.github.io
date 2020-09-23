@@ -3,50 +3,50 @@ title:  "The How and Why of Matrix Completion"
 mathjax: true
 layout: post
 ---
- ## What is Matrix Completion? 
- 
- Simply put, the goal of matrix completion is fill in missing entries of a matrix (or dataset) given the fact that the matrix is low rank, or low dimensional. Essentially, it's like a game of Sudoku with a different set of rules. Lets say I have a matrix that I know is supposed to be rank 2. That means that every column can be written as a linear combination (weighted sum) of two vectors. Lets look at an example of what this puzzle might look like. 
 
- $$ \begin{bmatrix} 1 & 1 &2 & 2\\ 2&1&3&\\ 1&2&&1 \end{bmatrix} $$ 
+## What is Matrix Completion? 
 
- The first two columns are completly filled in, so we can use those to figure out the rest of the columns. Based on the few entries in the third column that are given, we can see that the third column should probably be the first column plus the second column. Likewise, the fourth column is two times the first column minus the second column. 
+Simply put, the goal of matrix completion is fill in missing entries of a matrix (or dataset) given the fact that the matrix is low rank, or low dimensional. Essentially, it's like a game of Sudoku with a different set of rules. Lets say I have a matrix that I know is supposed to be rank 2. That means that every column can be written as a linear combination (weighted sum) of two vectors. Lets look at an example of what this puzzle might look like. 
+
+$$ \begin{bmatrix} 1 & 1 &2 & 2\\ 2&1&3&\\ 1&2&&1 \end{bmatrix} $$ 
+
+The first two columns are completly filled in, so we can use those to figure out the rest of the columns. Based on the few entries in the third column that are given, we can see that the third column should probably be the first column plus the second column. Likewise, the fourth column is two times the first column minus the second column. 
   
- $$ \begin{bmatrix}  1 & 1 &2 & 2\\2&1&3&5\\1&2&3&1 \end{bmatrix} $$ 
+$$ \begin{bmatrix}  1 & 1 &2 & 2\\2&1&3&5\\1&2&3&1 \end{bmatrix} $$ 
 
- That was a particularly easy example since we knew the first two columns completely.  
-
+That was a particularly easy example since we knew the first two columns completely.  
   
- To see why we should care about this, here's a claim that shouldn't be too hard to believe: <b> Datasets are inherently low rank </b>. In the example we just did, the columns could be movies, the rows could be people, and the numbers could be how each person rated each movie. Obviously, this is going to be sparse since not everyone has seen every movie. That's where matrix completions comes in. When we filled in the missing entries, we gave our guess as to what movies people are going to enjoy. After explaining an algorithm to do matrix completion, we're going to try this for a data set with a million ratings people gave movies and see how well we recommend movies to people.
+To see why we should care about this, here's a claim that shouldn't be too hard to believe: <b> Datasets are inherently low rank </b>. In the example we just did, the columns could be movies, the rows could be people, and the numbers could be how each person rated each movie. Obviously, this is going to be sparse since not everyone has seen every movie. That's where matrix completions comes in. When we filled in the missing entries, we gave our guess as to what movies people are going to enjoy. After explaining an algorithm to do matrix completion, we're going to try this for a data set with a million ratings people gave movies and see how well we recommend movies to people.
  
- ## How do we do it? 
+## How do we do it? 
 
 There's two paradigms for matrix completion. One is to minimize the rank of a matrix that fits our measurements, and the other is to find a matrix of a given rank that matches up with our known entries. In this blog post, I'll just be talking about the second. 
 
 Before we explain the algorithm, we need to introduce a little more notation. We are going to let $$ \Omega $$ be the set of indices where we know the entry. For example, if we have the partially observed matrix
  
- $$ \begin{matrix}\color{blue}1\\\color{blue}2\\\color{blue}3\end{matrix}\begin{bmatrix}   & 1 & \\ &  & 1\\1 &  &  \end{bmatrix} $$ 
+$$ \begin{matrix}\color{blue}1\\\color{blue}2\\\color{blue}3\end{matrix}\begin{bmatrix}   & 1 & \\ &  & 1\\1 &  &  \end{bmatrix} $$ 
   
-  $$ \begin{matrix} &\color{red}1 & \color{red}2 & \color{red}3 \end{matrix} $$ 
+$$ \begin{matrix} &\color{red}1 & \color{red}2 & \color{red}3 \end{matrix} $$ 
 
- then, $$ \Omega $$ would be $$ \{ (\color{blue} 1, \color{red}2), (\color{blue}2 , \color{red}3),(\color{blue} 3, \color{red}1)\} $$  We can now pose the problem of finding a matrix with rank $$ r $$ that best fits the entries we've observe as an <i> optimization problem</i>. 
+then, $$ \Omega $$ would be $$ \{ (\color{blue} 1, \color{red}2), (\color{blue}2 , \color{red}3),(\color{blue} 3, \color{red}1)\} $$  We can now pose the problem of finding a matrix with rank $$ r $$ that best fits the entries we've observe as an <i> optimization problem</i>. 
 
- $$ \begin{aligned}&\underset{X}{\text{minimize}}& \sum_{(i,j)\text{ in }\Omega} (X_{ij}-M_{ij})^2 \\& \text{such that} & \text{rank}(X)=r\end{aligned} $$ 
+$$ \begin{aligned}&\underset{X}{\text{minimize}}& \sum_{(i,j)\text{ in }\Omega} (X_{ij}-M_{ij})^2 \\& \text{such that} & \text{rank}(X)=r\end{aligned} $$ 
 
 The first line specifies <i> objective function </i>(the function we want to minimize), which is the sum of the square of the difference between $$ X_{ij} $$ and $$ M_{ij} $$ for every $$ (i,j) $$ that we have a measurement for. The second line is our <i> constraint</i>, which says that the matrix has to be rank $$ r $$ .
 
 While minimizing a function like that isn't too hard, forcing the matrix to be rank $$ r $$ can be tricky. One property of a low rank matrix that has $$ m $$ rows and $$ n $$ columns is that we can factor it into two smaller matrices like such: 
  
- $$ X=UV $$ 
+$$ X=UV $$ 
 
 where $$ U $$ is $$ n $$ by $$ r $$ and $$ V $$ is $$ r $$ by $$ m $$ . So now, if we can find matrices $$ U $$ and $$ V $$ such that the matrix $$ UV $$ fits our data, we know its going to be rank $$ r $$ and that will be the solution to our problem. 
 
 If $$ u_i $$ is the $$ i^{th} $$ column of $$ U $$ and $$ v_j $$ is the $$ j^{th} $$ column of $$ V $$ , then $$ X_{ij} $$ is the <i> inner product </i> of $$ u_i $$ and $$ v_j $$ , $$ X_{ij}= \langle u_i, v_i \rangle $$ . We can rewrite the optimization problem we want to solve as 
 
- $$ \begin{aligned} \underset{U, V}{\text{minimize}}& \sum_{(i,j)\in \Omega} (\langle u_i, v_i \rangle-M_{ij})^2 \end{aligned} $$ 
+$$ \begin{aligned} \underset{U, V}{\text{minimize}}& \sum_{(i,j)\in \Omega} (\langle u_i, v_i \rangle-M_{ij})^2 \end{aligned} $$ 
 
 In order to solve this, we can alternate between optimizing for $$ U $$ while letting $$ V $$ be a constant, and optimizing over $$ V $$ while letting $$ U $$ be a constant. If $$ t $$ is the iteration number, then the algorithm is simply 
  
- $$ \begin{aligned} \text{for } t=1,2,\ldots:& \\ U^{t}=&\underset{U}{\text{minimize}}& \sum_{(i,j)\in \Omega} (\langle u_i, v^{t-1} i \rangle-M_{ij})^2 \\ V^{t}=&\underset{ V}{\text{minimize}}& \sum_{(i,j)\in \Omega} (\langle u^t_i, v_i \rangle-M_{ij})^2 \\ \end{aligned} $$ 
+$$ \begin{aligned} \text{for } t=1,2,\ldots:& \\ U^{t}=&\underset{U}{\text{minimize}}& \sum_{(i,j)\in \Omega} (\langle u_i, v^{t-1} i \rangle-M_{ij})^2 \\ V^{t}=&\underset{ V}{\text{minimize}}& \sum_{(i,j)\in \Omega} (\langle u^t_i, v_i \rangle-M_{ij})^2 \\ \end{aligned} $$ 
 
 At each iteration, we just need to solve a least squares problem which is easy enough. 
 
@@ -85,11 +85,11 @@ y=[1,1,2,2,2,1,3,1,2,1]
 (U,V)=alt_min(3,4,2,X, y)
 print(U.dot(V))
 ```
-
+```
   [[1.00007939 0.99998808 1.9999993 2.00000032]
    [1.99997349 1.00000394 3.00000041 4.99908422]
    [0.99997352 2.00000397 2.99974998 0.99999984]]
-
+```
 
 Thats the same matrix we came up with!
 ## SpaLoR: A python package for Sparse and Low Rank models
@@ -106,7 +106,7 @@ In it, there is a model called <i>MatrixCompletion</i>, which you can use to fit
 
 
 
- ## How do we use it for movie recomendations? 
+## How do we use it for movie recomendations? 
 
 Now that we have a good understanding of what matrix completion is and how to do it, we can get to the fun part. Theres a ton of applications of matrix completion, from reconstructing the molecular structure of protiens from limited measurements to image classification, but by far the most commonly cited example is the Netflix problem. The state of the art dataset for movie recommendations comes from [MovieLens](https://grouplens.org/datasets/movielens/), and though they have datasets with 25 million ratings, we're going to stick with 1 million for simplicity. 
 
@@ -120,12 +120,12 @@ First, lets load the data set and see what it looks like.
 data = np.loadtxt( 'movieLens/ratings.dat',delimiter='::' )
 print(data[:][0:3])
 ```
-
+```
   [[1.00000000e+00 1.19300000e+03 5.00000000e+00 9.78300760e+08]
    [1.00000000e+00 6.61000000e+02 3.00000000e+00 9.78302109e+08]
    [1.00000000e+00 9.14000000e+02 3.00000000e+00 9.78301968e+08]]
 
-
+```
 The first column is the user ID, the second is the movie ID, the third is the rating (1,2,3,4, or 5), and the last is a time stamp (which we don't need to worry about). We want the rows of the matrix to be users, and the columns should be movies. 
 
 
@@ -139,9 +139,9 @@ n_movies=max(X[:,1])+1
 
 print((n_users,n_movies))
 ```
-
+```
   (6040, 3952)
-
+```
 
 So, we have 6040 users and 3952 movies. That's a total of about 23 million potential ratings, of which we know 1 million. We're going to reserve 200,000 of the ratings to test our results. 
 
@@ -166,9 +166,10 @@ print("MAE:",mean(abs(y_test-y_predict)))
 print("Percent of predictions off my less than 1: ",np.sum(abs(y_test-y_predict)<1)/len(y_test))
 ```
 
+```
   MAE: 0.6910439339771605
   Percent of predictions off my less than 1: 0.7603603243318903
-
+```
 
 I would say 0.691 is pretty good for the mean absolute error. Plus, 76% of the predictions are off by less than 1. This might not seem great, but its pretty close to the state of the art.
 
