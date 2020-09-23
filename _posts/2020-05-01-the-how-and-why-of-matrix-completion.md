@@ -1,13 +1,9 @@
+---
+title:  "The How and Why of Matrix Completion"
+mathjax: true
+layout: post
+---
 
-
-```python
-from IPython.display import Image
-from IPython.display import display_html
-from IPython.display import display
-from IPython.display import Math
-from IPython.display import Latex
-from IPython.display import HTML
-```
 
 <h1> What is Matrix Completion? </h1>
 <p> Simply put, the goal of matrix completion is fill in missing entries of a matrix (or dataset) given the fact that the matrix is low rank, or low dimensional.  Essentially, it's like a game of Sudoku with a different set of rules. Lets say I have a matrix that I know is supposed to be rank 2.  That means that every column can be written as a linear combination (weighted sum) of two vectors.  Lets look at an example of what this puzzle might look like.  </p>
