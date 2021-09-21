@@ -24,11 +24,12 @@ minimal: true               # use simpler style
 navigation:
   - {file: "index.html", icon: home}
   - {file: "blog.html", icon: address-card}
+  - {file: "CV.pdf", icon: cv}
 
 external:                    # see http://fontawesome.com/icons
 #  - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
   - {title: Github, icon: github, url: "https://github.com/april1729"}
-#  - {title: Subscribe, icon: rss, url: "/feed.xml"}
+  - {title: Google Scholar, icon: google, url: "https://scholar.google.com/citations?user=56_l06YAAAAJ"}
 
 comments:
 #  disqus_shortname: ""      # see https://disqus.com/
