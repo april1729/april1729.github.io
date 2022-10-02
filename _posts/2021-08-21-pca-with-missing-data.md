@@ -7,9 +7,9 @@ layout: post
 
 When you write a PhD dissertation, you end up spending a lot of time thinking about one very, very specific (and often times esoteric) topic. Every day. For years.  Sometimes, you have to talk to someone outside of your research group, and when they ask what your dissertation is on, you confidently respond with the name of the problem you study, only to be met with a confused look and a misplaced sense of shock that they have no idea what you are talking about.
 
-I get this cognitive dissonance everytime I tell someone my dissertation was on "matrix completion" and whenever someone mentioned want to use PCA but having to deal with missing data points first.  "You can do PCA without all the data!!" I would exclaim, "it works better without interpolating!".  Of course, the follow-up question to this point was always "how?", and I had no good answer.  Telling someone trying to solve a real problem about how matrix completion works on paper is usually of no help.
+I get this cognitive dissonance everytime I tell someone my dissertation was on "matrix completion" and whenever someone mentioned want to use PCA but having to deal with missing data points first.  "You can do PCA without all the data", I would exclaim, "it works better without interpolating!"  Of course, the follow-up question to this point was always "how?", and I had no good answer.  Telling someone trying to solve a real problem about a technique works on paper is usually of no help.
 
-Enter this blog post and the python package I made, [SpaLoR](www.spalor.org).  Amongst other features, SpaLor can be used to do PCA when you have missing data by using matrix completion.  In this tutorial, we're going to use the Wisconsin breast cancer diagnostics dataset, which is included as an example dataset in sci-kit learn.  It consists of 30 morphological features from 569 breast tumour biopsies, along with a label of "malignant" or "benign".
+Enter this blog post and the python package I made, [SpaLoR](www.spalor.org).  Amongst other features, SpaLor can do PCA when you have missing data by using matrix completion.  In this tutorial, we're going to use the Wisconsin breast cancer diagnostics dataset, which is included as an example dataset in scikit-learn.  It consists of 30 morphological features from 569 breast tumour biopsies, along with a label of "malignant" or "benign".
 
 We start by loading in the data and necessary packages.
 ```python
@@ -24,7 +24,8 @@ breast_cancer = load_breast_cancer()
 normalized_data = StandardScaler().fit_transform(breast_cancer.data)
 ```
 
-There's a reason this is a classic ML demonstration dataset: the features can predict the target variable using a linear model with incredibly high accuracy.  When we do PCA and color the samples by diagnosis, we see an almost perfect seperation with just two principal components.
+There's a reason this is a classic machine learning demonstration dataset: the features can predict the target variable using a linear model with incredibly high accuracy.  When we do PCA and color the samples by diagnosis, we see an almost perfect seperation with just two principal components.
+
 ```python
 pca = PCA(n_components=2)
 pca_data = pca.fit_transform(normalized_data)
@@ -32,7 +33,6 @@ ax=sns.scatterplot(x=pca_data[:,0], y=pca_data[:,1], hue=breast_cancer.target,s=
 ax.set_xlabel("PC1")
 ax.set_ylabel("PC2")
 ```
-    
 ![png](/assets/PCA_with_missing_data/output_3_1.png)
     
 We were able to condense all 30 features into just two PCs, and the information we care about is still there.  That's less than 7% of the size of the original data, so it's not too hard to believe that we don't need 100% of the data to get a meaningful low-dimensional representation.  Let's simulate what would happen if 20% of the data was missing, and replaced with NaN.
@@ -53,8 +53,7 @@ missing_data[0:5, 0:5]
 
 
 
-If you tried giving sklearn's PCA function this new matrix, you'd definitely get an error, so we'll use the MC class in SpaLoR.  We can use it the same way we used PCA:
-
+If you tried giving sklearn's PCA class this new matrix, you'd definitely get an error, so we'll use the MC class in SpaLoR.  We can use it the same way we used the PCA class:
 
 ```python
 mc = MC(n_components=2)
