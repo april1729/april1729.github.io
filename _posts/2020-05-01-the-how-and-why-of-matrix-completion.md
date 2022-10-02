@@ -8,7 +8,7 @@ layout: post
 
 Simply put, the goal of matrix completion is fill in missing entries of a matrix (or dataset) given the fact that the matrix is low rank, or low dimensional. Essentially, it's like a game of Sudoku with a different set of rules. Lets say I have a matrix that I know is supposed to be rank 2. That means that every column can be written as a linear combination (weighted sum) of two vectors. Lets look at an example of what this puzzle might look like. 
 
-$$ begin{bmatrix} 1 & 1 & 2 & 2 \\ 2 & 1 & 3 & - \\ 1 & 2 & - & 1 \end{bmatrix} $$
+$$ \begin{bmatrix}  1 & 1 &2 & 2\\2&1&3&-\\1&2&-&1 \end{bmatrix} $$ 
 
 The first two columns are completly filled in, so we can use those to figure out the rest of the columns. Based on the few entries in the third column that are given, we can see that the third column should probably be the first column plus the second column. Likewise, the fourth column is two times the first column minus the second column. 
   
