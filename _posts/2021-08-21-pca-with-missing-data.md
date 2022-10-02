@@ -5,7 +5,7 @@ layout: post
 
 ## You don't need every data point to do PCA. I promise, it can work just as well even if you don't interpolate first.
 
-When you write a PhD dissertation, you end up spending a lot of time thinking about one very, very specific (and often times esoteric) topic. Every day. For years.  Sometimes, you have to talk to someone outside of your research group, and when they ask what your dissertation is on, you confidently respond with the name of the problem you study, only to be met with a confused look and a misplaced sense of shock that they have no idea what you are talking about.
+When you write a PhD dissertation, you end up spending a lot of time thinking about one very specific and esoteric topic. Every day. For years.  Sometimes, you have to talk to someone outside of your research group, and when they ask what your dissertation is on, you confidently respond with the name of the problem you study, only to be met with a confused look and a misplaced sense of shock that they have no idea what you are talking about.
 
 I get this cognitive dissonance everytime I tell someone my dissertation was on "matrix completion" and whenever someone mentioned want to use PCA but having to deal with missing data points first.  "You can do PCA without all the data", I would exclaim, "it works better without interpolating!"  Of course, the follow-up question to this point was always "how?", and I had no good answer.  Telling someone trying to solve a real problem about a technique works on paper is usually of no help.
 
