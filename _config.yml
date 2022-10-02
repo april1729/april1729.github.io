@@ -24,7 +24,8 @@ minimal: true               # use simpler style
 navigation:
   - {file: "index.html", icon: home}
   - {file: "blog.html", icon: address-card}
-  - {file: "CV.pdf", icon: cv}
+  - {file: "publications.html"}
+  - {file: "CV.pdf"}
 
 external:                    # see http://fontawesome.com/icons
 #  - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
