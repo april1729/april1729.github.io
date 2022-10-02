@@ -22,10 +22,10 @@ minimal: true               # use simpler style
 # Menu
 
 navigation:
-  - {file: "index.html", icon: home}
-  - {file: "blog.html", icon: address-card}
-  - {title: Publications, file: "publications.html"}
-  - {title: CV, file: "cv_august_2022.pdf"}
+  - {file: "index.html"}
+  - {file: "blog.html"}
+  - {file: "publications.html"}
+  - {title: CV, url: "https://aprilsagan.net/cv_august_2022.pdf"}
 
 external:                    # see http://fontawesome.com/icons
 #  - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
