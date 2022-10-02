@@ -3,8 +3,7 @@ title:  "PCA with Missing Data"
 layout: post
 ---
 
-# You don't need every data point to do PCA
-## I promise, it can work just as well even if you dont interpolate first.
+## You don't need every data point to do PCA. I promise, it can work just as well even if you dont interpolate first.
 
 When you write a PhD dissertation, you end up spending a lot of time thinking about one very, very specific (and often times esoteric) topic. Every day. For years.  Sometimes, you have to talk to someone outside of your research group, and when they ask what your dissertation is on, you confidently respond with the name of the problem you study, only to be met with a confused look and a misplaced sense of shock that they have no idea what you are talking about.
 
