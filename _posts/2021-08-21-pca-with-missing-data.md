@@ -38,7 +38,7 @@ ax.set_xlabel("PC1")
 ax.set_ylabel("PC2")
 ```
     
-![png](PCA_with_missing_data/output_3_1.png)
+![png](assets/PCA_with_missing_data/output_3_1.png)
     
 
 
@@ -73,7 +73,7 @@ ax=sns.scatterplot(x=pca_missing_data[:,0], y=pca_missing_data[:,1], hue=breast_
 ax.set_xlabel("PC1")
 ax.set_ylabel("PC2")
 ```
-![png](PCA_with_missing_data/output_7_2.png)
+![png](assets/PCA_with_missing_data/output_7_2.png)
     
 
 
@@ -91,7 +91,7 @@ ax.set_xlabel("PC1")
 ax.set_ylabel("PC2")
 ```
     
-![png](PCA_with_missing_data/output_9_2.png)
+![png](assets/PCA_with_missing_data/output_9_2.png)
     
 
 
