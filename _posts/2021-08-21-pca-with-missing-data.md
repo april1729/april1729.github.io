@@ -81,5 +81,5 @@ ax.set_ylabel("PC2")
 ![png](/assets/PCA_with_missing_data/output_9_2.png)
 
 
-At this point, the seperation gets a little messier, but for just 20% of the data it's not bad at all!  So that's that, next time you see someone try to interpolate their missing data before doing PCA, you'll be able to tell them how to do it better.
+At this point, the seperation gets a little messier, but for just 20% of the data it's not bad at all!
 
